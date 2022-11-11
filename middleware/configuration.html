@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="GitHub Repository" href="../github-repo/configuration.html" /><link rel="prev" title="Working Components" href="../working-components/configuration.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Glossary" href="../glossary/configuration.html" />
 
     <meta name="generator" content="sphinx-5.0.1, furo 2022.06.04.1"/>
-        <title>Django Commands - Care documentation</title>
+        <title>Connecting with Middleware - Care documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -159,11 +159,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../local-setup/configuration.html">Setting up development environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pycharm/configuration.html">Debugging with Pycharm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../working-components/configuration.html">Working Components</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Django Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../django-commands/configuration.html">Django Commands</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../github-repo/configuration.html">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../others/configuration.html">Other Details</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary/configuration.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../middleware/configuration.html">Connecting with Middleware</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Connecting with Middleware</a></li>
 </ul>
 
 </div>
@@ -197,51 +197,16 @@
           </label>
         </div>
         <article role="main">
-          <section id="django-commands">
-<h1>Django Commands<a class="headerlink" href="#django-commands" title="Permalink to this heading">#</a></h1>
-<p>All Django commands must be executed by invoking <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span></code>, so for example, if the command is <code class="code docutils literal notranslate"><span class="pre">do_something</span></code> then the correct way to call the command is <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">do_something</span></code>. Make sure that the command is run in the root directory of the project and any virtual environment present must be activated before running the command.</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>command</p></th>
-<th class="head"><p>Arguments</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>createsuperuser</p></td>
-<td><p>None</p></td>
-<td><p>This command is used to create a superuser in the care application, Superusers are able to log in through the Django Admin panel and Access Scopes do not apply to them. Please take caution when creating them, apply strict password policies for accounts created as superusers. ideally, there should only be one superuser.</p>
-<p>Example Invocation: <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">createsuperuser</span></code></p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>load_dummy_data</p></td>
-<td><p>None</p></td>
-<td><p>This command is used to load dummy data for testing and development purposes only. User “devdistrictadmin” with password “<a class="reference external" href="mailto:Coronasafe&#37;&#52;&#48;123">Coronasafe<span>&#64;</span>123</a>” is populated, invokes <code class="code docutils literal notranslate"><span class="pre">load_data</span> <span class="pre">kerala</span></code> and <code class="code docutils literal notranslate"><span class="pre">seed_data</span></code>. This command will intentionally fail to run in staging or production environment.</p>
-<p>Example Invocation: <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">load_dummy_data</span></code></p>
-</td>
-</tr>
-<tr class="row-even"><td><p>load_data</p></td>
-<td><p>state_name</p></td>
-<td><p>This command is used to load all the DIstrict/Lsg/Ward Level data for a given state, The data that is imported is scraped from various sources, The admin can change this data at any point through the admin panel, If the state name is given as “all” then all available data is imported into care.</p>
-<p>Example Invocation: <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">load_data</span> <span class="pre">kerala</span></code></p>
-</td>
-</tr>
-<tr class="row-odd"><td><p>seed_data</p></td>
-<td><p>None</p></td>
-<td><p>This command loads all static data that the application needs to run, this includes inventory seed data for Oxygen, Medical Tests data, etc. All this data can be changed by the superuser from the admin panel.</p>
-<p>Example Invocation: <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">seed_data</span></code></p>
-</td>
-</tr>
-<tr class="row-even"><td><p>summarize</p></td>
-<td><p>None</p></td>
-<td><p>The summary jobs are run by Celery every 10 mins, but we can force Django to summarize the current data and update the summary table with this command</p>
-<p>Example Invocation: <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">summarize</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+          <section id="connecting-with-middleware">
+<h1>Connecting with Middleware<a class="headerlink" href="#connecting-with-middleware" title="Permalink to this heading">#</a></h1>
+<p>The requests from middleware server should contain:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The auth token must be of <code class="code docutils literal notranslate"><span class="pre">Middleware_Bearer</span></code> realm.</p></li>
+<li><p>The configured <code class="code docutils literal notranslate"><span class="pre">facility_id</span></code> in <code class="code docutils literal notranslate"><span class="pre">X-Facility-Id</span></code> header.</p></li>
+<li><p>The authentication header must contain <code class="code docutils literal notranslate"><span class="pre">asset_id</span></code> in the JWT.</p></li>
+</ul>
+</div></blockquote>
 </section>
 
         </article>
@@ -249,23 +214,15 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../github-repo/configuration.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">GitHub Repository</div>
-              </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="../working-components/configuration.html">
+          
+          <a class="prev-page" href="../glossary/configuration.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Working Components</div>
+                <div class="title">Glossary</div>
                 
               </div>
             </a>
